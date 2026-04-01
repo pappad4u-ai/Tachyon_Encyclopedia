@@ -1,0 +1,65 @@
+===PRODUCT===
+{
+  "id": 2259,
+  "title": "Ear Plugs with 5mm Tachyon Cells",
+  "sku": "EM-P",
+  "price": 17.98,
+  "currency": "USD",
+  "url": "/ear-plugs-with-5mm-tachyon-cells/",
+  "categories": [
+    10100,
+    2172,
+    2382,
+    2078,
+    2079,
+    2080,
+    2241,
+    2379,
+    3303,
+    8270,
+    2077
+  ],
+  "images": {
+    "primary": 
+"https://cdn11.bigcommerce.com/s-x5yr/products/2259/images/6963/Tachyon_Ear_Plugs__30051.1765565598.380.500.png?c=2",
+    "gallery": [
+      "https://cdn11.bigcommerce.com/s-ax5yr/products/2259/images/6963/Tachyon_Ear_Plugs__30051.1765565598.380.500.png?c=2"
+    ]
+  },
+  "content": "Overview:\nEar Plugs with 5mm Tachyonized™ Cells - Perfect for Treating the Inner Ear Using these ear plugs directs Tachyon energy into the inner ear, charging the SOEFs to stimulate the area to function at its highest bioenergetic potential. The Subtle Organizing Energy Field (SOEFs explained) converts Tachyon into the various frequencies needed to create order and harmony. Their NRR (Noise Reduction Ratio) is 30dB. CONTRAINDICATIONS AND CAUTIONS: None"
+}
+===PRODUCT===
+
+
+import csv
+import re
+from pathlib import Path
+
+# Folder containing your .md files
+md_folder = Path(r"C:\Users\YourName\Documents\md_files")
+
+# Output CSV file
+output_csv = md_folder / "combined_markdown.csv"
+
+rows = []
+
+for md_file in md_folder.glob("*.md"):
+    text = md_file.read_text(encoding="utf-8")
+
+    # Try to pull the first Markdown heading as title
+    match = re.search(r"^#\s+(.+)$", text, re.MULTILINE)
+    title = match.group(1).strip() if match else ""
+
+    rows.append({
+        "filename": md_file.name,
+        "title": title,
+        "content": text
+    })
+
+with open(output_csv, "w", newline="", encoding="utf-8-sig") as f:
+    writer = csv.DictWriter(f, fieldnames=["filename", "title", "content"])
+    writer.writeheader()
+    writer.writerows(rows)
+
+print(f"Done. Created: {output_csv}")
+print(f"Files processed: {len(rows)}")
